@@ -22,7 +22,7 @@ For example:
 The API uses **JWT** for authentication. You will need to obtain a JWT token by logging in with valid credentials. The token should be included in the **Authorization** header for all protected routes.
 
 - **Login to get JWT token**:
-  - **POST** `/api/v1/auth/login`
+  - **POST** `/api/v1/users/login`
   - **Request Body**:
     ```json
     {
@@ -501,3 +501,4 @@ Delete a user by ID.
 This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
 
 ---
+
