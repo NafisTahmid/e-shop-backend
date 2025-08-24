@@ -1,364 +1,389 @@
 
-# 🛍️ E-Shop Backend API Documentation
+# Full API Documentation
 
-## Overview
+## Project Overview
 
-The e-shop backend is a RESTful API built with Node.js, designed to manage an e-commerce platform. It supports user authentication, product management, shopping cart operations, and order processing. The API utilizes Swagger for interactive documentation.
+This backend project is built using **Node.js** and **MongoDB**. It provides a set of RESTful APIs to manage **Users**, **Products**, **Categories**, and **Orders**. The project uses **Express.js** as the web framework and **Mongoose** for MongoDB object modeling.
 
-## 📁 Project Structure
+The API follows a REST architecture and returns JSON responses for ease of use with frontend applications. The documentation below provides detailed descriptions of the endpoints, the required request formats, expected responses, and error handling for each route.
 
-- **`app.js`**: Main application entry point.
-- **`models/`**: Database models.
-- **`routers/`**: Route handlers for various endpoints.
-- **`swagger.js`**: Swagger configuration for API documentation.
-- **`swagger-output.json`**: Generated Swagger JSON documentation.
+---
 
-## ⚙️ Technologies Used
+## **API Endpoints**
 
-- Node.js
-- Express.js
-- Swagger
-- PostgreSQL
-- Passport.js
+### **1. Products Routes**
 
-## 🛠️ Setup Instructions
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/NafisTahmid/e-shop-backend.git
-   cd e-shop-backend
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Set up the database:
-
-   - Create a PostgreSQL database.
-   - Configure the database connection in `.env`.
-
-4. Start the application:
-
-   ```bash
-   npm start
-   ```
-
-## 🧾 API Endpoints
-
-### Authentication
-
-#### **POST** `/auth/login`
-- **Description**: User login to obtain a JWT token for authentication.
-- **Request Body**:
+#### **GET /api/products**
+- **Description**: Fetch all products from the database.
+- **Request**: No request body is required.
+- **Response**:
+  - **200 OK**: Returns an array of products, each containing `_id`, `name`, `price`, and `category`.
+  ```json
+  [
+    {
+      "_id": "67890",
+      "name": "Product Name",
+      "price": 25.99,
+      "category": "Electronics"
+    }
+  ]
+  ```
+  - **404 Not Found**: If no products exist in the database, the response will be:
   ```json
   {
-    "email": "user@example.com",
-    "password": "password123"
+    "message": "Products not found"
   }
   ```
-- **Response**:
-  - **200 OK**:
-    ```json
-    {
-      "token": "JWT_TOKEN_HERE"
-    }
-    ```
-  - **401 Unauthorized**:
-    ```json
-    {
-      "message": "Invalid credentials"
-    }
-    ```
 
-#### **POST** `/auth/register`
-- **Description**: Register a new user account.
-- **Request Body**:
+#### **GET /api/products/:id**
+- **Description**: Fetch a single product by its unique ID.
+- **Request**: The `id` parameter is required in the URL.
+- **Response**:
+  - **200 OK**: Returns the details of the specified product.
   ```json
   {
-    "name": "John Doe",
-    "email": "user@example.com",
-    "password": "password123"
+    "_id": "67890",
+    "name": "Product Name",
+    "price": 25.99,
+    "category": "Electronics"
   }
   ```
-- **Response**:
-  - **201 Created**:
-    ```json
-    {
-      "message": "User registered successfully"
-    }
-    ```
-  - **400 Bad Request**:
-    ```json
-    {
-      "message": "Email already exists"
-    }
-    ```
+  - **404 Not Found**: If the product with the provided ID is not found, the response will be:
+  ```json
+  {
+    "message": "Product not found"
+  }
+  ```
 
-### Products
-
-#### **GET** `/products`
-- **Description**: List all products available on the platform.
-- **Response**:
-  - **200 OK**:
-    ```json
-    [
-      {
-        "id": 1,
-        "name": "Product 1",
-        "description": "Description of Product 1",
-        "price": 29.99,
-        "category": "Category A",
-        "stock": 100
-      },
-      {
-        "id": 2,
-        "name": "Product 2",
-        "description": "Description of Product 2",
-        "price": 49.99,
-        "category": "Category B",
-        "stock": 50
-      }
-    ]
-    ```
-
-#### **GET** `/products/:id`
-- **Description**: Get product details by product ID.
-- **Request Parameters**:
-  - `id` (integer) - The ID of the product.
-- **Response**:
-  - **200 OK**:
-    ```json
-    {
-      "id": 1,
-      "name": "Product 1",
-      "description": "Description of Product 1",
-      "price": 29.99,
-      "category": "Category A",
-      "stock": 100
-    }
-    ```
-
-#### **POST** `/products`
-- **Description**: Add a new product (Admin only).
-- **Request Body**:
+#### **POST /api/products**
+- **Description**: Create a new product.
+- **Request Body**: A JSON object containing the product details.
   ```json
   {
     "name": "New Product",
-    "description": "New product description",
-    "price": 59.99,
-    "category": "Category C",
-    "stock": 200
+    "price": 29.99,
+    "category": "Electronics"
   }
   ```
 - **Response**:
-  - **201 Created**:
-    ```json
-    {
-      "message": "Product added successfully"
-    }
-    ```
-
-#### **PUT** `/products/:id`
-- **Description**: Update product details (Admin only).
-- **Request Parameters**:
-  - `id` (integer) - The ID of the product to update.
-- **Request Body**:
+  - **201 Created**: If the product is successfully created, the response will return the newly created product with its `_id`.
   ```json
   {
-    "name": "Updated Product Name",
-    "description": "Updated description",
-    "price": 39.99,
-    "category": "Category A",
-    "stock": 150
+    "_id": "98765",
+    "name": "New Product",
+    "price": 29.99,
+    "category": "Electronics"
   }
   ```
-- **Response**:
-  - **200 OK**:
-    ```json
-    {
-      "message": "Product updated successfully"
-    }
-    ```
 
-#### **DELETE** `/products/:id`
-- **Description**: Delete a product by its ID (Admin only).
-- **Request Parameters**:
-  - `id` (integer) - The ID of the product to delete.
-- **Response**:
-  - **200 OK**:
-    ```json
-    {
-      "message": "Product deleted successfully"
-    }
-    ```
-
-### Cart
-
-#### **GET** `/cart`
-- **Description**: View the items in the user's cart.
-- **Response**:
-  - **200 OK**:
-    ```json
-    [
-      {
-        "productId": 1,
-        "quantity": 2,
-        "totalPrice": 59.98
-      }
-    ]
-    ```
-
-#### **POST** `/cart`
-- **Description**: Add an item to the cart.
-- **Request Body**:
+#### **PUT /api/products/:id**
+- **Description**: Update an existing product by its ID.
+- **Request**: The `id` parameter is required in the URL. The request body should contain the updated fields.
   ```json
   {
-    "productId": 1,
-    "quantity": 2
+    "name": "Updated Product",
+    "price": 19.99,
+    "category": "Home Appliances"
   }
   ```
 - **Response**:
-  - **201 Created**:
-    ```json
-    {
-      "message": "Item added to cart"
-    }
-    ```
-
-#### **PUT** `/cart/:id`
-- **Description**: Update the quantity of an item in the cart.
-- **Request Parameters**:
-  - `id` (integer) - The ID of the cart item.
-- **Request Body**:
+  - **200 OK**: If the update is successful, it will return the updated product.
   ```json
   {
-    "quantity": 3
+    "_id": "67890",
+    "name": "Updated Product",
+    "price": 19.99,
+    "category": "Home Appliances"
+  }
+  ```
+
+#### **DELETE /api/products/:id**
+- **Description**: Delete a product by its ID.
+- **Request**: The `id` parameter is required in the URL.
+- **Response**:
+  - **200 OK**: If the product is successfully deleted, the response will be:
+  ```json
+  {
+    "message": "Product deleted successfully"
+  }
+  ```
+  - **404 Not Found**: If the product is not found, the response will be:
+  ```json
+  {
+    "message": "Product not found"
+  }
+  ```
+
+### **2. Categories Routes**
+
+#### **GET /api/categories**
+- **Description**: Fetch all product categories.
+- **Request**: No request body is required.
+- **Response**:
+  - **200 OK**: Returns an array of categories, each containing `_id` and `name`.
+  ```json
+  [
+    {
+      "_id": "11223",
+      "name": "Electronics"
+    }
+  ]
+  ```
+
+#### **GET /api/categories/:id**
+- **Description**: Fetch a single category by its unique ID.
+- **Request**: The `id` parameter is required in the URL.
+- **Response**:
+  - **200 OK**: Returns the details of the specified category.
+  ```json
+  {
+    "_id": "11223",
+    "name": "Electronics"
+  }
+  ```
+  - **404 Not Found**: If the category with the provided ID is not found, the response will be:
+  ```json
+  {
+    "message": "Category not found"
+  }
+  ```
+
+#### **POST /api/categories**
+- **Description**: Create a new category.
+- **Request Body**: A JSON object containing the category name.
+  ```json
+  {
+    "name": "Home Appliances"
   }
   ```
 - **Response**:
-  - **200 OK**:
-    ```json
-    {
-      "message": "Cart item updated successfully"
-    }
-    ```
+  - **201 Created**: If the category is successfully created, the response will return the newly created category.
+  ```json
+  {
+    "_id": "22334",
+    "name": "Home Appliances"
+  }
+  ```
 
-#### **DELETE** `/cart/:id`
-- **Description**: Remove an item from the cart.
-- **Request Parameters**:
-  - `id` (integer) - The ID of the cart item to remove.
+#### **PUT /api/categories/:id**
+- **Description**: Update a category by its ID.
+- **Request**: The `id` parameter is required in the URL. The request body should contain the updated category name.
+  ```json
+  {
+    "name": "Updated Category"
+  }
+  ```
 - **Response**:
-  - **200 OK**:
-    ```json
-    {
-      "message": "Item removed from cart"
-    }
-    ```
+  - **200 OK**: If the update is successful, it will return the updated category.
+  ```json
+  {
+    "_id": "11223",
+    "name": "Updated Category"
+  }
+  ```
 
-### Orders
-
-#### **GET** `/orders`
-- **Description**: List all orders made by the user.
+#### **DELETE /api/categories/:id**
+- **Description**: Delete a category by its ID.
+- **Request**: The `id` parameter is required in the URL.
 - **Response**:
-  - **200 OK**:
-    ```json
-    [
-      {
-        "orderId": 1,
-        "status": "pending",
-        "totalPrice": 150.00,
-        "items": [
-          {
-            "productId": 1,
-            "quantity": 2
-          }
-        ]
-      }
-    ]
-    ```
+  - **200 OK**: If the category is successfully deleted, the response will be:
+  ```json
+  {
+    "message": "Category deleted successfully"
+  }
+  ```
 
-#### **GET** `/orders/:id`
-- **Description**: Get order details by order ID.
-- **Request Parameters**:
-  - `id` (integer) - The ID of the order.
+### **3. Users Routes**
+
+#### **GET /api/users**
+- **Description**: Fetch all users from the database.
+- **Request**: No request body is required.
 - **Response**:
-  - **200 OK**:
-    ```json
+  - **200 OK**: Returns an array of users, each containing `_id`, `name`, and `email`.
+  ```json
+  [
     {
-      "orderId": 1,
-      "status": "pending",
-      "totalPrice": 150.00,
-      "items": [
-        {
-          "productId": 1,
-          "quantity": 2
-        }
-      ]
+      "_id": "12345",
+      "name": "John Doe",
+      "email": "john@example.com"
     }
-    ```
+  ]
+  ```
 
-#### **POST** `/orders`
+#### **GET /api/users/:id**
+- **Description**: Fetch a single user by their unique ID.
+- **Request**: The `id` parameter is required in the URL.
+- **Response**:
+  - **200 OK**: Returns the details of the specified user.
+  ```json
+  {
+    "_id": "12345",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+  ```
+  - **404 Not Found**: If the user with the provided ID is not found, the response will be:
+  ```json
+  {
+    "message": "User not found"
+  }
+  ```
+
+#### **POST /api/users**
+- **Description**: Create a new user.
+- **Request Body**: A JSON object containing the user's details.
+  ```json
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123"
+  }
+  ```
+- **Response**:
+  - **201 Created**: If the user is successfully created, the response will return the newly created user.
+  ```json
+  {
+    "_id": "12345",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+  ```
+
+#### **PUT /api/users/:id**
+- **Description**: Update a user's information by their ID.
+- **Request**: The `id` parameter is required in the URL. The request body should contain the fields to be updated.
+  ```json
+  {
+    "name": "Updated Name",
+    "email": "updated@example.com"
+  }
+  ```
+- **Response**:
+  - **200 OK**: If the update is successful, it will return the updated user.
+  ```json
+  {
+    "_id": "12345",
+    "name": "Updated Name",
+    "email": "updated@example.com"
+  }
+  ```
+
+#### **DELETE /api/users/:id**
+- **Description**: Delete a user by their ID.
+- **Request**: The `id` parameter is required in the URL.
+- **Response**:
+  - **200 OK**: If the user is successfully deleted, the response will be:
+  ```json
+  {
+    "message": "User deleted successfully"
+  }
+  ```
+
+### **4. Orders Routes**
+
+#### **GET /api/orders**
+- **Description**: Fetch all orders from the database.
+- **Request**: No request body is required.
+- **Response**:
+  - **200 OK**: Returns an array of orders, each containing order details like `_id`, `user`, `items`, and `status`.
+  ```json
+  [
+    {
+      "_id": "54321",
+      "user": "John Doe",
+      "items": ["Product A", "Product B"],
+      "status": "Shipped"
+    }
+  ]
+  ```
+
+#### **GET /api/orders/:id**
+- **Description**: Fetch a single order by its ID.
+- **Request**: The `id` parameter is required in the URL.
+- **Response**:
+  - **200 OK**: Returns the details of the specified order.
+  ```json
+  {
+    "_id": "54321",
+    "user": "John Doe",
+    "items": ["Product A", "Product B"],
+    "status": "Shipped"
+  }
+  ```
+
+#### **POST /api/orders**
 - **Description**: Create a new order.
-- **Request Body**:
+- **Request Body**: A JSON object containing the order details, such as the user and the items ordered.
   ```json
   {
-    "cartItems": [
-      {
-        "productId": 1,
-        "quantity": 2
-      }
-    ],
-    "address": "123 Main St, City, Country"
+    "user": "John Doe",
+    "items": ["Product A", "Product B"],
+    "status": "Pending"
   }
   ```
 - **Response**:
-  - **201 Created**:
-    ```json
-    {
-      "message": "Order created successfully"
-    }
-    ```
-
-#### **PUT** `/orders/:id`
-- **Description**: Update the status of an order (Admin only).
-- **Request Parameters**:
-  - `id` (integer) - The ID of the order.
-- **Request Body**:
+  - **201 Created**: If the order is successfully created, the response will return the newly created order.
   ```json
   {
-    "status": "shipped"
+    "_id": "65432",
+    "user": "John Doe",
+    "items": ["Product A", "Product B"],
+    "status": "Pending"
+  }
+  ```
+
+#### **PUT /api/orders/:id**
+- **Description**: Update an order by its ID.
+- **Request**: The `id` parameter is required in the URL. The request body should contain the updated order details.
+  ```json
+  {
+    "status": "Shipped"
   }
   ```
 - **Response**:
-  - **200 OK**:
-    ```json
-    {
-      "message": "Order status updated successfully"
-    }
-    ```
+  - **200 OK**: If the update is successful, it will return the updated order.
+  ```json
+  {
+    "_id": "54321",
+    "user": "John Doe",
+    "items": ["Product A", "Product B"],
+    "status": "Shipped"
+  }
+  ```
 
-#### **DELETE** `/orders/:id`
-- **Description**: Cancel an order by its ID.
-- **Request Parameters**:
-  - `id` (integer) - The ID of the order to cancel.
+#### **DELETE /api/orders/:id**
+- **Description**: Delete an order by its ID.
+- **Request**: The `id` parameter is required in the URL.
 - **Response**:
-  - **200 OK**:
-    ```json
-    {
-      "message": "Order cancelled successfully"
-    }
-    ```
-
-## 📄 API Documentation
-
-Interactive API documentation is available via Swagger UI:
-
-```
-http://localhost:3000/api-docs
-```
+  - **200 OK**: If the order is successfully deleted, the response will be:
+  ```json
+  {
+    "message": "Order deleted successfully"
+  }
+  ```
 
 ---
+
+## **Authentication**
+
+- **JWT Authentication**: This project uses **JWT** for user authentication. The API requires a valid **JWT token** in the `Authorization` header for protected routes. The token should be included in the header like so:
+  ```bash
+  Authorization: Bearer YOUR_JWT_TOKEN
+  ```
+
+---
+
+## **Swagger Documentation**
+
+This project uses **Swagger** for automatic API documentation generation. You can access the interactive API documentation via [swagger-output.json](swagger-output.json).
+
+---
+
+## **Base API URL**
+
+The base API URL is defined by the `api` variable, and routes are mounted as follows:
+
+- `/api/products`: For **Products** routes
+- `/api/categories`: For **Categories** routes
+- `/api/users`: For **Users** routes
+- `/api/orders`: For **Orders** routes
