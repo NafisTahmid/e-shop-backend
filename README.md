@@ -1,368 +1,80 @@
 
-# **Headless E-Commerce Backend**
+# **Project Documentation: Backend System**
 
 ## **Project Overview**
 
-This is a backend implementation for a headless e-commerce platform built with **Node.js** and **Express**. The backend supports key functionalities like browsing the product catalog, managing a shopping cart, applying promotions, and processing checkout orders. This API follows best practices for error handling, validation, and logging, and integrates MongoDB for database management.
-
-### **Key Features**
-
-- **Catalog Management**: Browse products with variants, pricing, and categories.
-- **Cart Management**: Create/fetch a cart (guest user), add, update, and remove items.
-- **Promo Codes**: Apply percentage-based or fixed discounts with validity windows.
-- **Checkout**: Create an order based on the cart and process payment details.
-- **Order Management**: View and manage orders.
-- **Validation**: API request validation using **Zod**, **Joi**, and **Yup**.
-- **Error Handling**: Standardized error responses and input validation.
-- **Logging**: Request logging with **Morgan** for debugging and performance monitoring.
-
----
-
-## **Tech Stack**
-
-- **Backend**: Node.js (LTS)
-- **Framework**: Express
-- **Database**: MongoDB with Mongoose
-- **Validation**: Zod, Joi, Yup
-- **File Upload**: Multer (for handling image uploads)
-- **API Documentation**: Swagger (output JSON available)
-- **Other**: CORS, Morgan
-
----
-
-## **Installation**
-
-### **1. Clone the repository**
-
-```bash
-git clone https://github.com/your-username/repository-name.git
-cd repository-name
-```
-
-### **2. Install dependencies**
-
-```bash
-npm install
-```
-
-### **3. Create a `.env` file**
-
-Make sure to create a `.env` file for your environment variables. Below is an example `.env` file:
-
-```bash
-MONGO_URI=your_mongo_database_uri
-PORT=5000
-JWT_SECRET=your_jwt_secret
-```
-
----
-
-## **Usage**
-
-### **1. Start the server**
-
-To run the server in development mode, execute the following:
-
-```bash
-npm run dev
-```
-
-This will start the server on `http://localhost:5000`.
-
----
-
-## **API Endpoints**
-
-### **Catalog (Products)**
-
-#### 1. **Get All Products**
-- **Method**: `GET`
-- **Endpoint**: `/products`
-  
-**Response**:
-```json
-[
-  {
-    "id": "product_id",
-    "name": "Product Name",
-    "description": "Product Description",
-    "price": 19.99,
-    "category": "Category Name",
-    "countInStock": 100,
-    "rating": 4.5
-  }
-]
-```
-
----
-
-### **Cart**
-
-#### 1. **Create Cart**
-- **Method**: `POST`
-- **Endpoint**: `/cart`
-- **Request Body**:
-  ```json
-  {
-    "items": [
-      {
-        "productId": "product_id",
-        "quantity": 2
-      }
-    ]
-  }
-  ```
-
-**Response**:
-```json
-{
-  "cartId": "cart_token",
-  "items": [
-    {
-      "productId": "product_id",
-      "quantity": 2
-    }
-  ]
-}
-```
-
-#### 2. **Get Cart**
-- **Method**: `GET`
-- **Endpoint**: `/cart/:token`
-
-**Response**:
-```json
-{
-  "cartId": "cart_token",
-  "items": [
-    {
-      "productId": "product_id",
-      "quantity": 2,
-      "totalPrice": 39.98
-    }
-  ],
-  "totalAmount": 39.98
-}
-```
-
-#### 3. **Update Cart**
-- **Method**: `PUT`
-- **Endpoint**: `/cart/:token`
-- **Request Body**:
-  ```json
-  {
-    "productId": "product_id",
-    "quantity": 3
-  }
-  ```
-
-**Response**:
-```json
-{
-  "cartId": "cart_token",
-  "items": [
-    {
-      "productId": "product_id",
-      "quantity": 3
-    }
-  ]
-}
-```
-
-#### 4. **Delete from Cart**
-- **Method**: `DELETE`
-- **Endpoint**: `/cart/:token`
-
-**Response**:
-```json
-{
-  "message": "Item removed from cart"
-}
-```
-
----
-
-### **Promo Codes**
-
-#### 1. **Apply Promo Code**
-- **Method**: `POST`
-- **Endpoint**: `/promo`
-- **Request Body**:
-  ```json
-  {
-    "promoCode": "SUMMER20",
-    "cartTotal": 100
-  }
-  ```
-
-**Response**:
-```json
-{
-  "discountAmount": 20,
-  "newTotal": 80
-}
-```
-
----
-
-### **Checkout**
-
-#### 1. **Create Order**
-- **Method**: `POST`
-- **Endpoint**: `/checkout`
-- **Request Body**:
-  ```json
-  {
-    "userId": "user_id",
-    "shippingAddress": {
-      "address1": "123 Main St",
-      "address2": "Apt 4B",
-      "city": "CityName",
-      "zip": "12345",
-      "country": "Country"
-    },
-    "items": [
-      {
-        "productId": "product_id",
-        "quantity": 3
-      }
-    ]
-  }
-  ```
-
-**Response**:
-```json
-{
-  "orderId": "order_id",
-  "shippingAddress": {
-    "address1": "123 Main St",
-    "address2": "Apt 4B",
-    "city": "CityName",
-    "zip": "12345",
-    "country": "Country"
-  },
-  "totalPrice": 80,
-  "status": "pending"
-}
-```
-
----
-
-### **Order Management**
-
-#### 1. **Get All Orders**
-- **Method**: `GET`
-- **Endpoint**: `/orders`
-
-**Response**:
-```json
-[
-  {
-    "orderId": "order_id",
-    "userId": "user_id",
-    "totalPrice": 80,
-    "status": "pending",
-    "dateOrdered": "2025-08-24T10:00:00Z"
-  }
-]
-```
-
-#### 2. **Get Order by ID**
-- **Method**: `GET`
-- **Endpoint**: `/orders/:id`
-
-**Response**:
-```json
-{
-  "orderId": "order_id",
-  "userId": "user_id",
-  "totalPrice": 80,
-  "status": "pending",
-  "shippingAddress": {
-    "address1": "123 Main St",
-    "address2": "Apt 4B",
-    "city": "CityName",
-    "zip": "12345",
-    "country": "Country"
-  },
-  "items": [
-    {
-      "productId": "product_id",
-      "quantity": 3
-    }
-  ]
-}
-```
-
----
-
-## **Swagger Documentation**
-
-While **Swagger UI** is available for API documentation, it is currently not working as expected. You can still refer to the detailed API endpoints listed above for the functionality. The API is designed to follow REST principles with clear and consistent routes for managing the catalog, cart, and orders.
-
----
+This backend project is built using Node.js and is designed to handle API requests for a variety of services. The system follows a modular structure with separate components for models, routes, and utilities. It also uses Swagger for API documentation, making it easy to understand and interact with the available endpoints.
 
 ## **Project Structure**
 
-The project follows a clean and modular structure:
+- **app.js**: This is the main entry point of the application, where the Express server is initialized, middleware is configured, and routes are set up.
+- **helper/**: Contains utility functions to aid in various operations such as data validation, error handling, and other helper methods.
+- **models/**: Contains the data models, defining the structure of the data stored in the database (likely using Mongoose for MongoDB).
+- **node_modules/**: Contains all the external dependencies required by the project. This folder is automatically created by npm.
+- **package.json**: Defines the metadata for the project, including dependencies, scripts, and other configuration.
+- **package-lock.json**: Ensures the exact version of each installed dependency is locked for consistency.
+- **public/**: A directory to serve static files such as images, CSS, or JavaScript to clients.
+- **routers/**: This directory contains the route files for different parts of the application. Each file in this directory defines routes for a specific service.
+- **swagger.js**: Configures Swagger to automatically generate and serve API documentation.
+- **swagger-output.json**: Contains the generated Swagger documentation in JSON format.
 
-### **1. `models/`**
+## **Key Features**
 
-Contains Mongoose schemas:
-- **`product.js`**: Defines the product schema (name, description, price, category, etc.).
-- **`order.js`**: Defines the order schema (order items, shipping details, user).
-- **`category.js`**: Defines the category schema for product categorization.
-- **`user.js`**: Defines the user schema (for handling user information).
+1. **Modular Structure**: The project is organized into clear modules for better maintainability.
+   - Routes are separated into different files in the **routers** directory.
+   - Models define the data structure in the **models** directory.
 
-### **2. `routers/`**
+2. **API Documentation**: Swagger is integrated into the project, and the generated API documentation is available through the Swagger UI. This allows developers to easily see all available endpoints, their descriptions, and expected inputs/outputs.
 
-Contains route handlers for various endpoints:
-- **`products.js`**: Routes related to product management.
-- **`orders.js`**: Routes related to order management.
-- **`categories.js`**: Routes for category management.
-- **`users.js`**: User-related routes for authentication and management.
+3. **Environment Variables**: The project uses a `.env` file for storing environment-specific variables such as database credentials, API keys, etc.
 
-### **3. `helper/`**
+4. **Database Models**: The **models** directory contains the schema for various resources, which are used to interact with the database (most likely MongoDB).
 
-Contains helper functions for common tasks:
-- **`jwt.js`**: JWT authentication middleware (optional).
-- **`error-handler.js`**: Standardized error handling middleware.
+5. **Error Handling**: Helper functions for consistent error responses across the project.
 
-### **4. `public/`**
+## **Setup Instructions**
 
-Contains files uploaded by users, such as product images.
+### Prerequisites
+- **Node.js** (v12 or higher)
+- **MongoDB** (if used as the database)
 
-### **5. `swagger-output.json`**
+### Installation
 
-The output of the Swagger documentation in JSON format.
+1. Clone the repository.
+2. Navigate to the project directory and install dependencies:
 
----
+   ```bash
+   npm install
+   ```
 
-## **Development Notes**
+3. Create a `.env` file in the root directory and define necessary environment variables. Example:
 
-### **Input Validation**
-The API uses **Zod**, **Joi**, and **Yup** for validating incoming requests to ensure the integrity of data. It helps in providing clear error messages and prevents invalid data from entering the system.
+   ```
+   DB_URI=mongodb://localhost:27017/your-database-name
+   SECRET_KEY=your-secret-key
+   ```
 
-### **Discount Logic**
-The **promo logic** is implemented to handle both **percentage** and **fixed** discounts. The `applyDiscount` function calculates the discount amount and updates the total cart price accordingly.
+4. Run the application:
 
-### **Image Upload**
-Product images are handled using **Multer**, which stores images in the `public/uploads` directory.
+   ```bash
+   npm start
+   ```
 
----
+5. The server will be accessible at `http://localhost:3000` (default).
 
-## **Testing**
+### API Documentation
+- The API documentation is automatically generated using Swagger. To view it, navigate to `http://localhost:3000/api-docs`.
 
-For basic tests, the project includes simple validation tests to check input data. However, you are encouraged to add more tests for each endpoint to ensure robust functionality.
+## **Common Commands**
 
----
+- **Start the development server**: `npm start`
+- **Run tests**: `npm test`
+- **Install dependencies**: `npm install`
+- **Generate Swagger documentation**: The documentation is automatically generated on server start.
 
-## **Contributing**
+## **Future Enhancements**
 
-Feel free to fork the repository, submit pull requests, and contribute to the project. Contributions are welcome, and we aim to improve this headless e-commerce backend.
-
----
-
-## **License**
-
-This project is licensed under the MIT License.
+- Add authentication (JWT or OAuth) for secure access to certain routes.
+- Implement more comprehensive logging using Winston or similar libraries.
+- Add caching for frequently accessed data to improve performance.
+- Expand the API documentation with more details about the endpoints and usage.
