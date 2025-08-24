@@ -1,26 +1,24 @@
 
 # API Documentation
 
-## **Project Overview**
+## Project Overview
 This backend API project is built using **Node.js**, **Express.js**, and **MongoDB**. It provides an API for managing products, categories, users, and orders for an e-commerce platform. The API is structured under the `/api/v1` endpoint.
 
-### **Tech Stack**
+### Tech Stack
 - **Backend**: Node.js with Express.js
 - **Database**: MongoDB (with Mongoose ORM)
 - **Authentication**: JWT (JSON Web Token) for secure API access
 - **File Uploads**: Multer (for handling file uploads and storing product images on the file system)
 - **API Documentation**: Swagger UI for easy exploration of the API
 
----
+## How to Use the API
 
-## **How to Use the API**
-
-### **Base URL**
+### Base URL
 All API requests are prefixed with `/api/v1`.  
 For example:  
 `https://yourdomain.com/api/v1/`
 
-### **Authentication**
+### Authentication
 The API uses **JWT** for authentication. You will need to obtain a JWT token by logging in with valid credentials. The token should be included in the **Authorization** header for all protected routes.
 
 - **Login to get JWT token**:
@@ -45,16 +43,14 @@ The API uses **JWT** for authentication. You will need to obtain a JWT token by 
   Authorization: Bearer JWT_TOKEN_HERE
   ```
 
----
+## API Endpoints
 
-## **API Endpoints**
+### 1. Categories Routes
 
-### **1. Categories Routes**
-
-#### **GET /api/v1/categories**
+#### GET /api/v1/categories
 Fetch all categories.
 
-- **Response**:
+- Response:
 ```json
 [
   {
@@ -69,10 +65,10 @@ Fetch all categories.
 ]
 ```
 
-#### **GET /api/v1/categories/:id**
+#### GET /api/v1/categories/:id
 Fetch a single category by ID.
 
-- **Response**:
+- Response:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1b6",
@@ -85,10 +81,10 @@ Fetch a single category by ID.
 }
 ```
 
-#### **POST /api/v1/categories**
+#### POST /api/v1/categories
 Create a new category.
 
-- **Request Body**:
+- Request Body:
 ```json
 {
   "name": "Category Name",
@@ -98,7 +94,7 @@ Create a new category.
 }
 ```
 
-- **Response**:
+- Response:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1b6",
@@ -111,10 +107,10 @@ Create a new category.
 }
 ```
 
-#### **PUT /api/v1/categories/:id**
+#### PUT /api/v1/categories/:id
 Update an existing category by ID.
 
-- **Request Body**:
+- Request Body:
 ```json
 {
   "name": "Updated Category Name",
@@ -124,7 +120,7 @@ Update an existing category by ID.
 }
 ```
 
-- **Response**:
+- Response:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1b6",
@@ -137,24 +133,22 @@ Update an existing category by ID.
 }
 ```
 
-#### **DELETE /api/v1/categories/:id**
+#### DELETE /api/v1/categories/:id
 Delete a category by ID.
 
-- **Response**:
+- Response:
 ```json
 {
   "message": "Category deleted successfully"
 }
 ```
 
----
+### 2. Products Routes
 
-### **2. Products Routes**
-
-#### **GET /api/v1/products**
+#### GET /api/v1/products
 Fetch all products.
 
-- **Response**:
+- Response:
 ```json
 [
   {
@@ -176,10 +170,10 @@ Fetch all products.
 ]
 ```
 
-#### **GET /api/v1/products/:id**
+#### GET /api/v1/products/:id
 Fetch a single product by ID.
 
-- **Response**:
+- Response:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a5",
@@ -199,10 +193,10 @@ Fetch a single product by ID.
 }
 ```
 
-#### **POST /api/v1/products**
+#### POST /api/v1/products
 Create a new product.
 
-- **Request Body**:
+- Request Body:
 ```json
 {
   "name": "Product Name",
@@ -219,7 +213,7 @@ Create a new product.
 }
 ```
 
-- **Response**:
+- Response:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a5",
@@ -239,10 +233,10 @@ Create a new product.
 }
 ```
 
-#### **PUT /api/v1/products/:id**
+#### PUT /api/v1/products/:id
 Update an existing product by ID.
 
-- **Request Body**:
+- Request Body:
 ```json
 {
   "name": "Updated Product Name",
@@ -259,7 +253,7 @@ Update an existing product by ID.
 }
 ```
 
-- **Response**:
+- Response:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a5",
@@ -279,57 +273,130 @@ Update an existing product by ID.
 }
 ```
 
-#### **DELETE /api/v1/products/:id**
+#### DELETE /api/v1/products/:id
 Delete a product by ID.
 
-- **Response**:
+- Response:
 ```json
 {
   "message": "Product deleted successfully"
 }
 ```
 
-#### **GET /api/v1/products/get/count**
-Get the total count of products.
+### 3. Orders Routes
 
-- **Response**:
-```json
-{
-  "total": 50
-}
-```
+#### GET /api/v1/orders
+Fetch all orders.
 
-#### **GET /api/v1/products/get/featured/:count**
-Get a list of featured products.
-
-- **Response**:
+- Response:
 ```json
 [
   {
-    "_id": "60c72b1f9d1b8d0c08c1e1a5",
-    "name": "Product Name",
-    "description": "Product description",
-    "richDescription": "Detailed product description",
-    "image": "product-image-url",
-    "images": ["image1", "image2"],
-    "brand": "Brand Name",
-    "price": 100,
-    "category": "Category ID",
-    "countInStock": 50,
-    "rating": 4.5,
-    "isFeatured": true,
-    "dateCreated": "2021-07-16T08:50:00.000Z",
+    "_id": "60c72b1f9d1b8d0c08c1e1a7",
+    "orderItems": ["orderItem1", "orderItem2"],
+    "shippingAddress1": "Address 1",
+    "shippingAddress2": "Address 2",
+    "city": "City",
+    "zip": "12345",
+    "country": "Country",
+    "phone": "1234567890",
+    "status": "pending",
+    "totalPrice": 200,
+    "user": "userID",
+    "dateOrdered": "2021-07-16T08:50:00.000Z",
     "updatedAt": "2021-07-16T08:50:00.000Z"
   }
 ]
 ```
 
----
+#### GET /api/v1/orders/:id
+Fetch a single order by ID.
 
-### **Image Uploads**
-Product images are uploaded via the **file system** using **Multer**. The images are stored in the `public/uploads/` directory, and the image URL will be returned as part of the product data.
+- Response:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1a7",
+  "orderItems": ["orderItem1", "orderItem2"],
+  "shippingAddress1": "Address 1",
+  "shippingAddress2": "Address 2",
+  "city": "City",
+  "zip": "12345",
+  "country": "Country",
+  "phone": "1234567890",
+  "status": "pending",
+  "totalPrice": 200,
+  "user": "userID",
+  "dateOrdered": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T08:50:00.000Z"
+}
+```
 
----
+#### POST /api/v1/orders
+Create a new order.
+
+- Request Body:
+```json
+{
+  "orderItems": ["orderItem1", "orderItem2"],
+  "shippingAddress1": "Address 1",
+  "shippingAddress2": "Address 2",
+  "city": "City",
+  "zip": "12345",
+  "country": "Country",
+  "phone": "1234567890",
+  "status": "pending",
+  "totalPrice": 200,
+  "user": "userID"
+}
+```
+
+- Response:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1a7",
+  "orderItems": ["orderItem1", "orderItem2"],
+  "shippingAddress1": "Address 1",
+  "shippingAddress2": "Address 2",
+  "city": "City",
+  "zip": "12345",
+  "country": "Country",
+  "phone": "1234567890",
+  "status": "pending",
+  "totalPrice": 200,
+  "user": "userID",
+  "dateOrdered": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T08:50:00.000Z"
+}
+```
+
+#### PUT /api/v1/orders/:id
+Update an order's status by ID.
+
+- Request Body:
+```json
+{
+  "status": "shipped"
+}
+```
+
+- Response:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1a7",
+  "status": "shipped",
+  "updatedAt": "2021-07-16T09:00:00.000Z"
+}
+```
+
+#### DELETE /api/v1/orders/:id
+Delete an order by ID.
+
+- Response:
+```json
+{
+  "message": "Order deleted successfully"
+}
+```
 
 ### **Error Handling**
 If an API request fails, the server will return an error response with a status code and message.
@@ -343,8 +410,5 @@ Example:
 
 ---
 
-## **Conclusion**
+### **Conclusion**
 This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
-
----
-
