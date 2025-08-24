@@ -51,31 +51,307 @@ The e-shop backend is a RESTful API built with Node.js, designed to manage an e-
 
 ### Authentication
 
-- **POST** `/auth/login`: User login.
-- **POST** `/auth/register`: User registration.
+#### **POST** `/auth/login`
+- **Description**: User login to obtain a JWT token for authentication.
+- **Request Body**:
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "password123"
+  }
+  ```
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "token": "JWT_TOKEN_HERE"
+    }
+    ```
+  - **401 Unauthorized**:
+    ```json
+    {
+      "message": "Invalid credentials"
+    }
+    ```
+
+#### **POST** `/auth/register`
+- **Description**: Register a new user account.
+- **Request Body**:
+  ```json
+  {
+    "name": "John Doe",
+    "email": "user@example.com",
+    "password": "password123"
+  }
+  ```
+- **Response**:
+  - **201 Created**:
+    ```json
+    {
+      "message": "User registered successfully"
+    }
+    ```
+  - **400 Bad Request**:
+    ```json
+    {
+      "message": "Email already exists"
+    }
+    ```
 
 ### Products
 
-- **GET** `/products`: List all products.
-- **GET** `/products/:id`: Get product details by ID.
-- **POST** `/products`: Add a new product (Admin only).
-- **PUT** `/products/:id`: Update product details (Admin only).
-- **DELETE** `/products/:id`: Delete a product (Admin only).
+#### **GET** `/products`
+- **Description**: List all products available on the platform.
+- **Response**:
+  - **200 OK**:
+    ```json
+    [
+      {
+        "id": 1,
+        "name": "Product 1",
+        "description": "Description of Product 1",
+        "price": 29.99,
+        "category": "Category A",
+        "stock": 100
+      },
+      {
+        "id": 2,
+        "name": "Product 2",
+        "description": "Description of Product 2",
+        "price": 49.99,
+        "category": "Category B",
+        "stock": 50
+      }
+    ]
+    ```
+
+#### **GET** `/products/:id`
+- **Description**: Get product details by product ID.
+- **Request Parameters**:
+  - `id` (integer) - The ID of the product.
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "id": 1,
+      "name": "Product 1",
+      "description": "Description of Product 1",
+      "price": 29.99,
+      "category": "Category A",
+      "stock": 100
+    }
+    ```
+
+#### **POST** `/products`
+- **Description**: Add a new product (Admin only).
+- **Request Body**:
+  ```json
+  {
+    "name": "New Product",
+    "description": "New product description",
+    "price": 59.99,
+    "category": "Category C",
+    "stock": 200
+  }
+  ```
+- **Response**:
+  - **201 Created**:
+    ```json
+    {
+      "message": "Product added successfully"
+    }
+    ```
+
+#### **PUT** `/products/:id`
+- **Description**: Update product details (Admin only).
+- **Request Parameters**:
+  - `id` (integer) - The ID of the product to update.
+- **Request Body**:
+  ```json
+  {
+    "name": "Updated Product Name",
+    "description": "Updated description",
+    "price": 39.99,
+    "category": "Category A",
+    "stock": 150
+  }
+  ```
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "message": "Product updated successfully"
+    }
+    ```
+
+#### **DELETE** `/products/:id`
+- **Description**: Delete a product by its ID (Admin only).
+- **Request Parameters**:
+  - `id` (integer) - The ID of the product to delete.
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "message": "Product deleted successfully"
+    }
+    ```
 
 ### Cart
 
-- **GET** `/cart`: View user's cart.
-- **POST** `/cart`: Add item to cart.
-- **PUT** `/cart/:id`: Update cart item quantity.
-- **DELETE** `/cart/:id`: Remove item from cart.
+#### **GET** `/cart`
+- **Description**: View the items in the user's cart.
+- **Response**:
+  - **200 OK**:
+    ```json
+    [
+      {
+        "productId": 1,
+        "quantity": 2,
+        "totalPrice": 59.98
+      }
+    ]
+    ```
+
+#### **POST** `/cart`
+- **Description**: Add an item to the cart.
+- **Request Body**:
+  ```json
+  {
+    "productId": 1,
+    "quantity": 2
+  }
+  ```
+- **Response**:
+  - **201 Created**:
+    ```json
+    {
+      "message": "Item added to cart"
+    }
+    ```
+
+#### **PUT** `/cart/:id`
+- **Description**: Update the quantity of an item in the cart.
+- **Request Parameters**:
+  - `id` (integer) - The ID of the cart item.
+- **Request Body**:
+  ```json
+  {
+    "quantity": 3
+  }
+  ```
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "message": "Cart item updated successfully"
+    }
+    ```
+
+#### **DELETE** `/cart/:id`
+- **Description**: Remove an item from the cart.
+- **Request Parameters**:
+  - `id` (integer) - The ID of the cart item to remove.
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "message": "Item removed from cart"
+    }
+    ```
 
 ### Orders
 
-- **GET** `/orders`: List user's orders.
-- **GET** `/orders/:id`: Get order details by ID.
-- **POST** `/orders`: Create a new order.
-- **PUT** `/orders/:id`: Update order status (Admin only).
-- **DELETE** `/orders/:id`: Cancel an order.
+#### **GET** `/orders`
+- **Description**: List all orders made by the user.
+- **Response**:
+  - **200 OK**:
+    ```json
+    [
+      {
+        "orderId": 1,
+        "status": "pending",
+        "totalPrice": 150.00,
+        "items": [
+          {
+            "productId": 1,
+            "quantity": 2
+          }
+        ]
+      }
+    ]
+    ```
+
+#### **GET** `/orders/:id`
+- **Description**: Get order details by order ID.
+- **Request Parameters**:
+  - `id` (integer) - The ID of the order.
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "orderId": 1,
+      "status": "pending",
+      "totalPrice": 150.00,
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        }
+      ]
+    }
+    ```
+
+#### **POST** `/orders`
+- **Description**: Create a new order.
+- **Request Body**:
+  ```json
+  {
+    "cartItems": [
+      {
+        "productId": 1,
+        "quantity": 2
+      }
+    ],
+    "address": "123 Main St, City, Country"
+  }
+  ```
+- **Response**:
+  - **201 Created**:
+    ```json
+    {
+      "message": "Order created successfully"
+    }
+    ```
+
+#### **PUT** `/orders/:id`
+- **Description**: Update the status of an order (Admin only).
+- **Request Parameters**:
+  - `id` (integer) - The ID of the order.
+- **Request Body**:
+  ```json
+  {
+    "status": "shipped"
+  }
+  ```
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "message": "Order status updated successfully"
+    }
+    ```
+
+#### **DELETE** `/orders/:id`
+- **Description**: Cancel an order by its ID.
+- **Request Parameters**:
+  - `id` (integer) - The ID of the order to cancel.
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "message": "Order cancelled successfully"
+    }
+    ```
 
 ## 📄 API Documentation
 
@@ -86,9 +362,3 @@ http://localhost:3000/api-docs
 ```
 
 ---
-
-## 📥 Download API Documentation
-
-To download the API documentation as a `.zip` file, click the link below:
-
-[Download API Documentation](sandbox:/mnt/data/e-shop-backend-api-documentation.zip)
