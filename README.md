@@ -8,7 +8,7 @@ This backend API project is built using **Node.js**, **Express.js**, and **Mongo
 - **Backend**: Node.js with Express.js
 - **Database**: MongoDB (with Mongoose ORM)
 - **Authentication**: JWT (JSON Web Token) for secure API access
-- **File Uploads**: Multer (for handling file uploads)
+- **File Uploads**: Multer (for handling file uploads and storing product images on the file system)
 - **API Documentation**: Swagger UI for easy exploration of the API
 
 ---
@@ -323,6 +323,11 @@ Get a list of featured products.
   }
 ]
 ```
+
+---
+
+### **Image Uploads**
+Product images are uploaded via the **file system** using **Multer**. The images are stored in the `public/uploads/` directory, and the image URL will be returned as part of the product data.
 
 ---
 
