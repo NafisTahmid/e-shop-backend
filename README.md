@@ -290,23 +290,7 @@ Fetch all orders.
 
 - Response:
 ```json
-[
-  {
-    "_id": "60c72b1f9d1b8d0c08c1e1a7",
-    "orderItems": ["orderItem1", "orderItem2"],
-    "shippingAddress1": "Address 1",
-    "shippingAddress2": "Address 2",
-    "city": "City",
-    "zip": "12345",
-    "country": "Country",
-    "phone": "1234567890",
-    "status": "pending",
-    "totalPrice": 200,
-    "user": "userID",
-    "dateOrdered": "2021-07-16T08:50:00.000Z",
-    "updatedAt": "2021-07-16T08:50:00.000Z"
-  }
-]
+[ { "_id": "60c72b1f9d1b8d0c08c1e1a7", "orderItems": ["orderItem1"], "totalPrice": 200, "status": "pending", "user": "userID" } ]
 ```
 
 #### GET /api/v1/orders/:id
@@ -314,21 +298,7 @@ Fetch a single order by ID.
 
 - Response:
 ```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1a7",
-  "orderItems": ["orderItem1", "orderItem2"],
-  "shippingAddress1": "Address 1",
-  "shippingAddress2": "Address 2",
-  "city": "City",
-  "zip": "12345",
-  "country": "Country",
-  "phone": "1234567890",
-  "status": "pending",
-  "totalPrice": 200,
-  "user": "userID",
-  "dateOrdered": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
+{ "_id": "60c72b1f9d1b8d0c08c1e1a7", "orderItems": ["orderItem1"], "totalPrice": 200, "status": "pending", "user": "userID" }
 ```
 
 #### POST /api/v1/orders
@@ -337,15 +307,9 @@ Create a new order.
 - Request Body:
 ```json
 {
-  "orderItems": ["orderItem1", "orderItem2"],
-  "shippingAddress1": "Address 1",
-  "shippingAddress2": "Address 2",
-  "city": "City",
-  "zip": "12345",
-  "country": "Country",
-  "phone": "1234567890",
-  "status": "pending",
+  "orderItems": ["orderItem1"],
   "totalPrice": 200,
+  "status": "pending",
   "user": "userID"
 }
 ```
@@ -354,18 +318,10 @@ Create a new order.
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a7",
-  "orderItems": ["orderItem1", "orderItem2"],
-  "shippingAddress1": "Address 1",
-  "shippingAddress2": "Address 2",
-  "city": "City",
-  "zip": "12345",
-  "country": "Country",
-  "phone": "1234567890",
-  "status": "pending",
+  "orderItems": ["orderItem1"],
   "totalPrice": 200,
-  "user": "userID",
-  "dateOrdered": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
+  "status": "pending",
+  "user": "userID"
 }
 ```
 
@@ -398,7 +354,96 @@ Delete an order by ID.
 }
 ```
 
-### **Error Handling**
+### 4. User Routes
+
+#### GET /api/v1/users
+Fetch all users.
+
+- Response:
+```json
+[
+  {
+    "_id": "60c72b1f9d1b8d0c08c1e1b7",
+    "name": "User Name",
+    "email": "user@example.com",
+    "role": "admin",
+    "createdAt": "2021-07-16T08:50:00.000Z",
+    "updatedAt": "2021-07-16T08:50:00.000Z"
+  }
+]
+```
+
+#### GET /api/v1/users/:id
+Fetch a single user by ID.
+
+- Response:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1b7",
+  "name": "User Name",
+  "email": "user@example.com",
+  "role": "admin",
+  "createdAt": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T08:50:00.000Z"
+}
+```
+
+#### POST /api/v1/users
+Create a new user.
+
+- Request Body:
+```json
+{
+  "name": "New User",
+  "email": "newuser@example.com",
+  "password": "password123",
+  "role": "user"
+}
+```
+
+- Response:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1b7",
+  "name": "New User",
+  "email": "newuser@example.com",
+  "role": "user"
+}
+```
+
+#### PUT /api/v1/users/:id
+Update an existing user's information.
+
+- Request Body:
+```json
+{
+  "name": "Updated User",
+  "email": "updateduser@example.com",
+  "role": "user"
+}
+```
+
+- Response:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1b7",
+  "name": "Updated User",
+  "email": "updateduser@example.com",
+  "role": "user"
+}
+```
+
+#### DELETE /api/v1/users/:id
+Delete a user by ID.
+
+- Response:
+```json
+{
+  "message": "User deleted successfully"
+}
+```
+
+### Error Handling
 If an API request fails, the server will return an error response with a status code and message.
 
 Example:
@@ -410,5 +455,5 @@ Example:
 
 ---
 
-### **Conclusion**
+### Conclusion
 This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
