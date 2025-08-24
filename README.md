@@ -160,9 +160,17 @@ Fetch all products.
   {
     "_id": "60c72b1f9d1b8d0c08c1e1a5",
     "name": "Product Name",
+    "description": "Product description",
+    "richDescription": "Detailed product description",
+    "image": "product-image-url",
+    "images": ["image1", "image2"],
+    "brand": "Brand Name",
     "price": 100,
     "category": "Category ID",
-    "createdAt": "2021-07-16T08:50:00.000Z",
+    "countInStock": 50,
+    "rating": 4.5,
+    "isFeatured": true,
+    "dateCreated": "2021-07-16T08:50:00.000Z",
     "updatedAt": "2021-07-16T08:50:00.000Z"
   }
 ]
@@ -176,9 +184,17 @@ Fetch a single product by ID.
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a5",
   "name": "Product Name",
+  "description": "Product description",
+  "richDescription": "Detailed product description",
+  "image": "product-image-url",
+  "images": ["image1", "image2"],
+  "brand": "Brand Name",
   "price": 100,
   "category": "Category ID",
-  "createdAt": "2021-07-16T08:50:00.000Z",
+  "countInStock": 50,
+  "rating": 4.5,
+  "isFeatured": true,
+  "dateCreated": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
 ```
@@ -190,8 +206,16 @@ Create a new product.
 ```json
 {
   "name": "Product Name",
+  "description": "Product description",
+  "richDescription": "Detailed product description",
+  "image": "product-image-url",
+  "images": ["image1", "image2"],
+  "brand": "Brand Name",
   "price": 100,
-  "category": "Category ID"
+  "category": "Category ID",
+  "countInStock": 50,
+  "rating": 4.5,
+  "isFeatured": true
 }
 ```
 
@@ -200,9 +224,17 @@ Create a new product.
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a5",
   "name": "Product Name",
+  "description": "Product description",
+  "richDescription": "Detailed product description",
+  "image": "product-image-url",
+  "images": ["image1", "image2"],
+  "brand": "Brand Name",
   "price": 100,
   "category": "Category ID",
-  "createdAt": "2021-07-16T08:50:00.000Z",
+  "countInStock": 50,
+  "rating": 4.5,
+  "isFeatured": true,
+  "dateCreated": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
 ```
@@ -214,8 +246,16 @@ Update an existing product by ID.
 ```json
 {
   "name": "Updated Product Name",
+  "description": "Updated product description",
+  "richDescription": "Updated detailed description",
+  "image": "updated-product-image-url",
+  "images": ["updated-image1", "updated-image2"],
+  "brand": "Updated Brand",
   "price": 120,
-  "category": "New Category ID"
+  "category": "Updated Category ID",
+  "countInStock": 60,
+  "rating": 4.7,
+  "isFeatured": false
 }
 ```
 
@@ -224,9 +264,17 @@ Update an existing product by ID.
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a5",
   "name": "Updated Product Name",
+  "description": "Updated product description",
+  "richDescription": "Updated detailed description",
+  "image": "updated-product-image-url",
+  "images": ["updated-image1", "updated-image2"],
+  "brand": "Updated Brand",
   "price": 120,
-  "category": "New Category ID",
-  "createdAt": "2021-07-16T08:50:00.000Z",
+  "category": "Updated Category ID",
+  "countInStock": 60,
+  "rating": 4.7,
+  "isFeatured": false,
+  "dateCreated": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T09:00:00.000Z"
 }
 ```
@@ -241,176 +289,39 @@ Delete a product by ID.
 }
 ```
 
----
+#### **GET /api/v1/products/get/count**
+Get the total count of products.
 
-### **3. Users Routes**
+- **Response**:
+```json
+{
+  "total": 50
+}
+```
 
-#### **GET /api/v1/users**
-Fetch all users.
+#### **GET /api/v1/products/get/featured/:count**
+Get a list of featured products.
 
 - **Response**:
 ```json
 [
   {
-    "_id": "60c72b1f9d1b8d0c08c1e1a8",
-    "username": "User Name",
-    "email": "user@example.com",
-    "createdAt": "2021-07-16T08:50:00.000Z",
+    "_id": "60c72b1f9d1b8d0c08c1e1a5",
+    "name": "Product Name",
+    "description": "Product description",
+    "richDescription": "Detailed product description",
+    "image": "product-image-url",
+    "images": ["image1", "image2"],
+    "brand": "Brand Name",
+    "price": 100,
+    "category": "Category ID",
+    "countInStock": 50,
+    "rating": 4.5,
+    "isFeatured": true,
+    "dateCreated": "2021-07-16T08:50:00.000Z",
     "updatedAt": "2021-07-16T08:50:00.000Z"
   }
 ]
-```
-
-#### **GET /api/v1/users/:id**
-Fetch a single user by ID.
-
-- **Response**:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1a8",
-  "username": "User Name",
-  "email": "user@example.com",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-#### **POST /api/v1/users**
-Create a new user.
-
-- **Request Body**:
-```json
-{
-  "username": "User Name",
-  "email": "user@example.com",
-  "password": "password123"
-}
-```
-
-- **Response**:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1a8",
-  "username": "User Name",
-  "email": "user@example.com",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-#### **PUT /api/v1/users/:id**
-Update an existing user by ID.
-
-- **Request Body**:
-```json
-{
-  "username": "Updated User Name",
-  "email": "updateduser@example.com",
-  "password": "newpassword123"
-}
-```
-
-- **Response**:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1a8",
-  "username": "Updated User Name",
-  "email": "updateduser@example.com",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T09:00:00.000Z"
-}
-```
-
----
-
-### **4. Orders Routes**
-
-#### **GET /api/v1/orders**
-Fetch all orders.
-
-- **Response**:
-```json
-[
-  {
-    "_id": "60c72b1f9d1b8d0c08c1e1aa",
-    "userId": "User ID",
-    "products": [
-      {
-        "productId": "Product ID",
-        "quantity": 2
-      }
-    ],
-    "createdAt": "2021-07-16T08:50:00.000Z",
-    "updatedAt": "2021-07-16T08:50:00.000Z"
-  }
-]
-```
-
-#### **GET /api/v1/orders/:id**
-Fetch a single order by ID.
-
-- **Response**:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1aa",
-  "userId": "User ID",
-  "products": [
-    {
-      "productId": "Product ID",
-      "quantity": 2
-    }
-  ],
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-#### **POST /api/v1/orders**
-Create a new order.
-
-- **Request Body**:
-```json
-{
-  "userId": "User ID",
-  "products": [
-    { "productId": "Product ID", "quantity": 2 }
-  ]
-}
-```
-
-- **Response**:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1aa",
-  "userId": "User ID",
-  "products": [
-    { "productId": "Product ID", "quantity": 2 }
-  ],
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
----
-
-## **Authentication**
-
-#### **POST /api/v1/auth/login**
-Login and receive a JWT token.
-
-- **Request Body**:
-```json
-{
-  "email": "user@example.com",
-  "password": "password123"
-}
-```
-
-- **Response**:
-```json
-{
-  "token": "JWT_TOKEN_HERE"
-}
 ```
 
 ---
