@@ -1,14 +1,139 @@
 
 # API Documentation
 
-## Project Overview
-This backend project is built using Node.js with Express.js and MongoDB. It provides an API to handle various services such as managing products, categories, users, and orders.
+## **Project Overview**
+This backend API project is built using **Node.js**, **Express.js**, and **MongoDB**. It provides an API for managing products, categories, users, and orders for an e-commerce platform. The API is structured under the `/api/v1` endpoint.
 
-## API Endpoints
+### **Tech Stack**
+- **Backend**: Node.js with Express.js
+- **Database**: MongoDB (with Mongoose ORM)
+- **Authentication**: JWT (JSON Web Token) for secure API access
+- **File Uploads**: Multer (for handling file uploads)
+- **API Documentation**: Swagger UI for easy exploration of the API
 
-### 1. **Products Routes**
+---
 
-#### **GET /api/products**
+## **How to Use the API**
+
+### **Base URL**
+All API requests are prefixed with `/api/v1`.  
+For example:  
+`https://yourdomain.com/api/v1/`
+
+### **Authentication**
+The API uses **JWT** for authentication. You will need to obtain a JWT token by logging in with valid credentials. The token should be included in the **Authorization** header for all protected routes.
+
+- **Login to get JWT token**:
+  - **POST** `/api/v1/auth/login`
+  - **Request Body**:
+    ```json
+    {
+      "email": "user@example.com",
+      "password": "password123"
+    }
+    ```
+  - **Response**:
+    ```json
+    {
+      "token": "JWT_TOKEN_HERE"
+    }
+    ```
+
+- **Authorization Header for Protected Routes**:
+  Include the JWT token in the Authorization header for protected routes.
+  ```bash
+  Authorization: Bearer JWT_TOKEN_HERE
+  ```
+
+---
+
+## **API Endpoints**
+
+### **1. Categories Routes**
+
+#### **GET /api/v1/categories**
+Fetch all categories.
+
+- **Response**:
+```json
+[
+  {
+    "_id": "60c72b1f9d1b8d0c08c1e1b6",
+    "name": "Category Name",
+    "createdAt": "2021-07-16T08:50:00.000Z",
+    "updatedAt": "2021-07-16T08:50:00.000Z"
+  }
+]
+```
+
+#### **GET /api/v1/categories/:id**
+Fetch a single category by ID.
+
+- **Response**:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1b6",
+  "name": "Category Name",
+  "createdAt": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T08:50:00.000Z"
+}
+```
+
+#### **POST /api/v1/categories**
+Create a new category.
+
+- **Request Body**:
+```json
+{
+  "name": "Category Name"
+}
+```
+
+- **Response**:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1b6",
+  "name": "Category Name",
+  "createdAt": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T08:50:00.000Z"
+}
+```
+
+#### **PUT /api/v1/categories/:id**
+Update an existing category by ID.
+
+- **Request Body**:
+```json
+{
+  "name": "Updated Category Name"
+}
+```
+
+- **Response**:
+```json
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1b6",
+  "name": "Updated Category Name",
+  "createdAt": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T09:00:00.000Z"
+}
+```
+
+#### **DELETE /api/v1/categories/:id**
+Delete a category by ID.
+
+- **Response**:
+```json
+{
+  "message": "Category deleted successfully"
+}
+```
+
+---
+
+### **2. Products Routes**
+
+#### **GET /api/v1/products**
 Fetch all products.
 
 - **Response**:
@@ -25,7 +150,7 @@ Fetch all products.
 ]
 ```
 
-#### **GET /api/products/:id**
+#### **GET /api/v1/products/:id**
 Fetch a single product by ID.
 
 - **Response**:
@@ -40,7 +165,7 @@ Fetch a single product by ID.
 }
 ```
 
-#### **POST /api/products**
+#### **POST /api/v1/products**
 Create a new product.
 
 - **Request Body**:
@@ -64,7 +189,7 @@ Create a new product.
 }
 ```
 
-#### **PUT /api/products/:id**
+#### **PUT /api/v1/products/:id**
 Update an existing product by ID.
 
 - **Request Body**:
@@ -88,7 +213,7 @@ Update an existing product by ID.
 }
 ```
 
-#### **DELETE /api/products/:id**
+#### **DELETE /api/v1/products/:id**
 Delete a product by ID.
 
 - **Response**:
@@ -98,59 +223,11 @@ Delete a product by ID.
 }
 ```
 
-### 2. **Categories Routes**
+---
 
-#### **GET /api/categories**
-Fetch all categories.
+### **3. Users Routes**
 
-- **Response**:
-```json
-[
-  {
-    "_id": "60c72b1f9d1b8d0c08c1e1b6",
-    "name": "Category Name",
-    "createdAt": "2021-07-16T08:50:00.000Z",
-    "updatedAt": "2021-07-16T08:50:00.000Z"
-  }
-]
-```
-
-#### **GET /api/categories/:id**
-Fetch a single category by ID.
-
-- **Response**:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1b6",
-  "name": "Category Name",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-#### **POST /api/categories**
-Create a new category.
-
-- **Request Body**:
-```json
-{
-  "name": "Category Name"
-}
-```
-
-- **Response**:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1b6",
-  "name": "Category Name",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-### 3. **Users Routes**
-
-#### **GET /api/users**
+#### **GET /api/v1/users**
 Fetch all users.
 
 - **Response**:
@@ -166,7 +243,7 @@ Fetch all users.
 ]
 ```
 
-#### **GET /api/users/:id**
+#### **GET /api/v1/users/:id**
 Fetch a single user by ID.
 
 - **Response**:
@@ -180,7 +257,7 @@ Fetch a single user by ID.
 }
 ```
 
-#### **POST /api/users**
+#### **POST /api/v1/users**
 Create a new user.
 
 - **Request Body**:
@@ -203,7 +280,7 @@ Create a new user.
 }
 ```
 
-#### **PUT /api/users/:id**
+#### **PUT /api/v1/users/:id**
 Update an existing user by ID.
 
 - **Request Body**:
@@ -226,9 +303,11 @@ Update an existing user by ID.
 }
 ```
 
-### 4. **Orders Routes**
+---
 
-#### **GET /api/orders**
+### **4. Orders Routes**
+
+#### **GET /api/v1/orders**
 Fetch all orders.
 
 - **Response**:
@@ -249,7 +328,7 @@ Fetch all orders.
 ]
 ```
 
-#### **GET /api/orders/:id**
+#### **GET /api/v1/orders/:id**
 Fetch a single order by ID.
 
 - **Response**:
@@ -268,7 +347,7 @@ Fetch a single order by ID.
 }
 ```
 
-#### **POST /api/orders**
+#### **POST /api/v1/orders**
 Create a new order.
 
 - **Request Body**:
@@ -294,9 +373,11 @@ Create a new order.
 }
 ```
 
-### Authentication
+---
 
-#### **POST /api/auth/login**
+## **Authentication**
+
+#### **POST /api/v1/auth/login**
 Login and receive a JWT token.
 
 - **Request Body**:
@@ -314,5 +395,22 @@ Login and receive a JWT token.
 }
 ```
 
-## Swagger Documentation
-You can also explore the Swagger-generated API documentation by visiting the `/api-docs` endpoint.
+---
+
+### **Error Handling**
+If an API request fails, the server will return an error response with a status code and message.
+
+Example:
+```json
+{
+  "message": "Error fetching categories"
+}
+```
+
+---
+
+## **Conclusion**
+This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
+
+---
+
