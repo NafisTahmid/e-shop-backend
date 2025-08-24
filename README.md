@@ -45,250 +45,12 @@ The API uses **JWT** for authentication. You will need to obtain a JWT token by 
 
 ## API Endpoints
 
-### 1. Categories Routes
-
-#### GET /api/v1/categories
-Fetch all categories.
-
-- Response:
-```json
-[
-  {
-    "_id": "60c72b1f9d1b8d0c08c1e1b6",
-    "name": "Category Name",
-    "color": "#FF5733",
-    "icon": "icon-name",
-    "image": "category-image-url",
-    "createdAt": "2021-07-16T08:50:00.000Z",
-    "updatedAt": "2021-07-16T08:50:00.000Z"
-  }
-]
-```
-
-#### GET /api/v1/categories/:id
-Fetch a single category by ID.
-
-- Response:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1b6",
-  "name": "Category Name",
-  "color": "#FF5733",
-  "icon": "icon-name",
-  "image": "category-image-url",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-#### POST /api/v1/categories
-Create a new category.
-
-- Request Body:
-```json
-{
-  "name": "Category Name",
-  "color": "#FF5733",
-  "icon": "icon-name",
-  "image": "category-image-url"
-}
-```
-
-- Response:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1b6",
-  "name": "Category Name",
-  "color": "#FF5733",
-  "icon": "icon-name",
-  "image": "category-image-url",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-#### PUT /api/v1/categories/:id
-Update an existing category by ID.
-
-- Request Body:
-```json
-{
-  "name": "Updated Category Name",
-  "color": "#FF5733",
-  "icon": "updated-icon-name",
-  "image": "updated-category-image-url"
-}
-```
-
-- Response:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1b6",
-  "name": "Updated Category Name",
-  "color": "#FF5733",
-  "icon": "updated-icon-name",
-  "image": "updated-category-image-url",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T09:00:00.000Z"
-}
-```
-
-#### DELETE /api/v1/categories/:id
-Delete a category by ID.
-
-- Response:
-```json
-{
-  "message": "Category deleted successfully"
-}
-```
-
-### 2. Products Routes
-
-#### GET /api/v1/products
-Fetch all products.
-
-- Response:
-```json
-[
-  {
-    "_id": "60c72b1f9d1b8d0c08c1e1a5",
-    "name": "Product Name",
-    "description": "Product description",
-    "richDescription": "Detailed product description",
-    "image": "product-image-url",
-    "images": ["image1", "image2"],
-    "brand": "Brand Name",
-    "price": 100,
-    "category": "Category ID",
-    "countInStock": 50,
-    "rating": 4.5,
-    "isFeatured": true,
-    "dateCreated": "2021-07-16T08:50:00.000Z",
-    "updatedAt": "2021-07-16T08:50:00.000Z"
-  }
-]
-```
-
-#### GET /api/v1/products/:id
-Fetch a single product by ID.
-
-- Response:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1a5",
-  "name": "Product Name",
-  "description": "Product description",
-  "richDescription": "Detailed product description",
-  "image": "product-image-url",
-  "images": ["image1", "image2"],
-  "brand": "Brand Name",
-  "price": 100,
-  "category": "Category ID",
-  "countInStock": 50,
-  "rating": 4.5,
-  "isFeatured": true,
-  "dateCreated": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-#### POST /api/v1/products
-Create a new product.
-
-- Request Body:
-```json
-{
-  "name": "Product Name",
-  "description": "Product description",
-  "richDescription": "Detailed product description",
-  "image": "product-image-url",
-  "images": ["image1", "image2"],
-  "brand": "Brand Name",
-  "price": 100,
-  "category": "Category ID",
-  "countInStock": 50,
-  "rating": 4.5,
-  "isFeatured": true
-}
-```
-
-- Response:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1a5",
-  "name": "Product Name",
-  "description": "Product description",
-  "richDescription": "Detailed product description",
-  "image": "product-image-url",
-  "images": ["image1", "image2"],
-  "brand": "Brand Name",
-  "price": 100,
-  "category": "Category ID",
-  "countInStock": 50,
-  "rating": 4.5,
-  "isFeatured": true,
-  "dateCreated": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T08:50:00.000Z"
-}
-```
-
-#### PUT /api/v1/products/:id
-Update an existing product by ID.
-
-- Request Body:
-```json
-{
-  "name": "Updated Product Name",
-  "description": "Updated product description",
-  "richDescription": "Updated detailed description",
-  "image": "updated-product-image-url",
-  "images": ["updated-image1", "updated-image2"],
-  "brand": "Updated Brand",
-  "price": 120,
-  "category": "Updated Category ID",
-  "countInStock": 60,
-  "rating": 4.7,
-  "isFeatured": false
-}
-```
-
-- Response:
-```json
-{
-  "_id": "60c72b1f9d1b8d0c08c1e1a5",
-  "name": "Updated Product Name",
-  "description": "Updated product description",
-  "richDescription": "Updated detailed description",
-  "image": "updated-product-image-url",
-  "images": ["updated-image1", "updated-image2"],
-  "brand": "Updated Brand",
-  "price": 120,
-  "category": "Updated Category ID",
-  "countInStock": 60,
-  "rating": 4.7,
-  "isFeatured": false,
-  "dateCreated": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T09:00:00.000Z"
-}
-```
-
-#### DELETE /api/v1/products/:id
-Delete a product by ID.
-
-- Response:
-```json
-{
-  "message": "Product deleted successfully"
-}
-```
-
-### 3. Orders Routes
+### 1. Order Routes
 
 #### GET /api/v1/orders
 Fetch all orders.
 
-- Response:
+- **Response**:
 ```json
 [
   {
@@ -312,7 +74,7 @@ Fetch all orders.
 #### GET /api/v1/orders/:id
 Fetch a single order by ID.
 
-- Response:
+- **Response**:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a7",
@@ -334,7 +96,7 @@ Fetch a single order by ID.
 #### POST /api/v1/orders
 Create a new order.
 
-- Request Body:
+- **Request Body**:
 ```json
 {
   "orderItems": ["orderItem1", "orderItem2"],
@@ -346,11 +108,15 @@ Create a new order.
   "phone": "1234567890",
   "status": "pending",
   "totalPrice": 200,
-  "user": "userID"
+  "user": "userID",
+  "discount": {
+    "type": "percentage",  // or "fixed"
+    "value": 10  // Discount value in percentage or fixed amount
+  }
 }
 ```
 
-- Response:
+- **Response**:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a7",
@@ -362,7 +128,7 @@ Create a new order.
   "country": "Country",
   "phone": "1234567890",
   "status": "pending",
-  "totalPrice": 200,
+  "totalPrice": 180,  // Updated total after applying discount
   "user": "userID",
   "dateOrdered": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
@@ -370,16 +136,16 @@ Create a new order.
 ```
 
 #### PUT /api/v1/orders/:id
-Update an order's status by ID.
+Update an existing order's status by ID.
 
-- Request Body:
+- **Request Body**:
 ```json
 {
   "status": "shipped"
 }
 ```
 
-- Response:
+- **Response**:
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a7",
@@ -391,27 +157,52 @@ Update an order's status by ID.
 #### DELETE /api/v1/orders/:id
 Delete an order by ID.
 
-- Response:
+- **Response**:
 ```json
 {
   "message": "Order deleted successfully"
 }
 ```
 
-### 4. Users Routes
+#### GET /api/v1/orders/get/userorders/:userid
+Fetch all orders for a specific user by user ID.
+
+- **Response**:
+```json
+[
+  {
+    "_id": "60c72b1f9d1b8d0c08c1e1a7",
+    "orderItems": ["orderItem1", "orderItem2"],
+    "shippingAddress1": "Address 1",
+    "shippingAddress2": "Address 2",
+    "city": "City",
+    "zip": "12345",
+    "country": "Country",
+    "phone": "1234567890",
+    "status": "pending",
+    "totalPrice": 200,
+    "user": "userID",
+    "dateOrdered": "2021-07-16T08:50:00.000Z",
+    "updatedAt": "2021-07-16T08:50:00.000Z"
+  }
+]
+```
+
+### 2. User Routes
 
 #### GET /api/v1/users
 Fetch all users.
 
-- Response:
+- **Response**:
 ```json
 [
   {
-    "_id": "60c72b1f9d1b8d0c08c1e1a5",
-    "email": "user@example.com",
+    "_id": "60c72b1f9d1b8d0c08c1e1b5",
     "name": "User Name",
-    "role": "user",
-    "status": "active",
+    "email": "user@example.com",
+    "phone": "1234567890",
+    "address": "Street, Apartment, City",
+    "isAdmin": true,
     "createdAt": "2021-07-16T08:50:00.000Z",
     "updatedAt": "2021-07-16T08:50:00.000Z"
   }
@@ -421,14 +212,15 @@ Fetch all users.
 #### GET /api/v1/users/:id
 Fetch a single user by ID.
 
-- Response:
+- **Response**:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1a5",
-  "email": "user@example.com",
+  "_id": "60c72b1f9d1b8d0c08c1e1b5",
   "name": "User Name",
-  "role": "user",
-  "status": "active",
+  "email": "user@example.com",
+  "phone": "1234567890",
+  "address": "Street, Apartment, City",
+  "isAdmin": true,
   "createdAt": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
@@ -437,67 +229,70 @@ Fetch a single user by ID.
 #### POST /api/v1/users
 Create a new user.
 
-- Request Body:
+- **Request Body**:
 ```json
 {
-  "email": "newuser@example.com",
+  "name": "User Name",
+  "email": "user@example.com",
   "password": "password123",
-  "name": "New User",
-  "role": "user",
-  "status": "active"
+  "phone": "1234567890",
+  "address": "Street, Apartment, City",
+  "isAdmin": false
 }
 ```
 
-- Response:
+- **Response**:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1a5",
-  "email": "newuser@example.com",
-  "name": "New User",
-  "role": "user",
-  "status": "active",
+  "_id": "60c72b1f9d1b8d0c08c1e1b5",
+  "name": "User Name",
+  "email": "user@example.com",
+  "phone": "1234567890",
+  "address": "Street, Apartment, City",
+  "isAdmin": false,
   "createdAt": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
 ```
 
-#### PUT /api/v1/users/:id
-Update an existing user's details.
+#### POST /api/v1/users/login
+Login a user.
 
-- Request Body:
+- **Request Body**:
 ```json
 {
-  "email": "updateduser@example.com",
-  "name": "Updated User",
-  "role": "admin",
-  "status": "active"
+  "email": "user@example.com",
+  "password": "password123"
 }
 ```
 
-- Response:
+- **Response**:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1a5",
-  "email": "updateduser@example.com",
-  "name": "Updated User",
-  "role": "admin",
-  "status": "active",
-  "createdAt": "2021-07-16T08:50:00.000Z",
-  "updatedAt": "2021-07-16T09:00:00.000Z"
+  "message": "Login successful",
+  "token": "JWT_TOKEN_HERE"
+}
+```
+
+#### GET /api/v1/users/get/count
+Get the total count of users.
+
+- **Response**:
+```json
+{
+  "total": 50
 }
 ```
 
 #### DELETE /api/v1/users/:id
 Delete a user by ID.
 
-- Response:
+- **Response**:
 ```json
 {
   "message": "User deleted successfully"
 }
 ```
 
-### Conclusion
-This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
-
 ---
+
