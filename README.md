@@ -22,7 +22,7 @@ For example:
 The API uses **JWT** for authentication. You will need to obtain a JWT token by logging in with valid credentials. The token should be included in the **Authorization** header for all protected routes.
 
 - **Login to get JWT token**:
-  - **POST** `/api/v1/users/login`
+  - **POST** `/api/v1/auth/login`
   - **Request Body**:
     ```json
     {
@@ -204,8 +204,8 @@ Create a new product.
   "name": "Product Name",
   "description": "Product description",
   "richDescription": "Detailed product description",
-  "image": "product-image-url",
-  "images": ["image1", "image2"],
+  "image": "file (product-image.jpg)",
+  "images": ["file (image1.jpg)", "file (image2.jpg)"],
   "brand": "Brand Name",
   "price": 100,
   "category": "Category ID",
@@ -326,147 +326,116 @@ Delete a product by ID.
 
 ---
 
-### 3. Orders Routes
+### 4. Users Routes
 
-#### **GET /api/v1/orders**
-Fetch all orders.
+#### **GET /api/v1/users**
+Fetch all users.
 
 - **Response**:
 ```json
-[ 
+[
   {
-    "_id": "60c72b1f9d1b8d0c08c1e1a7",
-    "orderItems": ["orderItem1", "orderItem2"],
-    "shippingAddress1": "Address 1",
-    "shippingAddress2": "Address 2",
+    "_id": "60c72b1f9d1b8d0c08c1e1b6",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "1234567890",
+    "street": "123 Main St",
+    "apartment": "Apt 1",
     "city": "City",
     "zip": "12345",
     "country": "Country",
-    "phone": "1234567890",
-    "status": "pending",
-    "totalPrice": 200,
-    "user": "userID",
-    "dateOrdered": "2021-07-16T08:50:00.000Z",
+    "isAdmin": false,
+    "createdAt": "2021-07-16T08:50:00.000Z",
     "updatedAt": "2021-07-16T08:50:00.000Z"
   }
 ]
 ```
 
-#### **GET /api/v1/orders/:id**
-Fetch a single order by ID.
+#### **GET /api/v1/users/:id**
+Fetch a single user by ID.
 
 - **Response**:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1a7",
-  "orderItems": ["orderItem1", "orderItem2"],
-  "shippingAddress1": "Address 1",
-  "shippingAddress2": "Address 2",
+  "_id": "60c72b1f9d1b8d0c08c1e1b6",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "1234567890",
+  "street": "123 Main St",
+  "apartment": "Apt 1",
   "city": "City",
   "zip": "12345",
   "country": "Country",
-  "phone": "1234567890",
-  "status": "pending",
-  "totalPrice": 200,
-  "user": "userID",
-  "dateOrdered": "2021-07-16T08:50:00.000Z",
+  "isAdmin": false,
+  "createdAt": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
 ```
 
-#### **POST /api/v1/orders**
-Create a new order.
+#### **POST /api/v1/users**
+Create a new user.
 
 - **Request Body**:
 ```json
 {
-  "orderItems": ["orderItem1", "orderItem2"],
-  "shippingAddress1": "Address 1",
-  "shippingAddress2": "Address 2",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "1234567890",
+  "password": "password123",
+  "street": "123 Main St",
+  "apartment": "Apt 1",
   "city": "City",
   "zip": "12345",
   "country": "Country",
-  "phone": "1234567890",
-  "status": "pending",
-  "totalPrice": 200,
-  "user": "userID",
-  "discount": {
-    "type": "percentage",
-    "value": 10
-  }
+  "isAdmin": false
 }
 ```
 
 - **Response**:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1a7",
-  "orderItems": ["orderItem1", "orderItem2"],
-  "shippingAddress1": "Address 1",
-  "shippingAddress2": "Address 2",
+  "_id": "60c72b1f9d1b8d0c08c1e1b6",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "1234567890",
+  "street": "123 Main St",
+  "apartment": "Apt 1",
   "city": "City",
   "zip": "12345",
   "country": "Country",
-  "phone": "1234567890",
-  "status": "pending",
-  "totalPrice": 180,
-  "user": "userID",
-  "dateOrdered": "2021-07-16T08:50:00.000Z",
+  "isAdmin": false,
+  "createdAt": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
 ```
 
-#### **PUT /api/v1/orders/:id**
-Update an order's status by ID.
+#### **POST /api/v1/users/login**
+Login and get a JWT Token.
 
 - **Request Body**:
 ```json
 {
-  "status": "shipped"
+  "email": "john@example.com",
+  "password": "password123"
 }
 ```
 
 - **Response**:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1a7",
-  "status": "shipped",
-  "updatedAt": "2021-07-16T09:00:00.000Z"
+  "message": "Login successful",
+  "token": "JWT_TOKEN_HERE"
 }
 ```
 
-#### **DELETE /api/v1/orders/:id**
-Delete an order by ID.
+#### **DELETE /api/v1/users/:id**
+Delete a user by ID.
 
 - **Response**:
 ```json
 {
-  "message": "Order deleted successfully"
+  "message": "User deleted successfully"
 }
-```
-
-#### **GET /api/v1/orders/get/userorders/:userid**
-Fetch all orders for a specific user by their ID.
-
-- **Response**:
-```json
-[ 
-  {
-    "_id": "60c72b1f9d1b8d0c08c1e1a7",
-    "orderItems": ["orderItem1", "orderItem2"],
-    "shippingAddress1": "Address 1",
-    "shippingAddress2": "Address 2",
-    "city": "City",
-    "zip": "12345",
-    "country": "Country",
-    "phone": "1234567890",
-    "status": "pending",
-    "totalPrice": 200,
-    "user": "userID",
-    "dateOrdered": "2021-07-16T08:50:00.000Z",
-    "updatedAt": "2021-07-16T08:50:00.000Z"
-  }
-]
 ```
 
 ---
@@ -474,3 +443,4 @@ Fetch all orders for a specific user by their ID.
 ### Conclusion
 This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
 
+In the documentation you're completely missing user routes. Please add them and make a professional readme.md file as downloadable.
