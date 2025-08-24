@@ -1,5 +1,5 @@
 
-# **Project Documentation: Backend System with API Endpoints**
+# **Project Documentation: Backend System with API Endpoints and Checkout Process**
 
 ## **Project Overview**
 
@@ -203,6 +203,114 @@ Here’s a summary of all the available API endpoints, the HTTP methods they sup
     }
     ```
 
+### **4. Order Routes**
+
+#### `POST /api/orders`
+- **Description**: Create a new order.
+- **Request Body**:
+    ```json
+    {
+      "user_id": "1",
+      "product_ids": ["101", "102"],
+      "quantity": [1, 2],
+      "total_price": 350
+    }
+    ```
+- **Response**:
+    ```json
+    {
+      "order_id": "2001",
+      "status": "Pending",
+      "user_id": "1",
+      "product_ids": ["101", "102"],
+      "total_price": 350
+    }
+    ```
+
+#### `GET /api/orders/:id`
+- **Description**: Fetch an order by ID.
+- **Response**:
+    ```json
+    {
+      "order_id": "2001",
+      "user_id": "1",
+      "product_ids": ["101", "102"],
+      "status": "Pending",
+      "total_price": 350
+    }
+    ```
+
+#### `PUT /api/orders/:id`
+- **Description**: Update the status of an order by ID (e.g., change status to "Shipped").
+- **Request Body**:
+    ```json
+    {
+      "status": "Shipped"
+    }
+    ```
+- **Response**:
+    ```json
+    {
+      "order_id": "2001",
+      "status": "Shipped",
+      "user_id": "1",
+      "product_ids": ["101", "102"],
+      "total_price": 350
+    }
+    ```
+
+#### `DELETE /api/orders/:id`
+- **Description**: Delete an order by ID.
+- **Response**:
+    ```json
+    {
+      "message": "Order deleted successfully"
+    }
+    ```
+
+### **5. Checkout Routes**
+
+#### `POST /api/checkout`
+- **Description**: Initiate the checkout process.
+- **Request Body**:
+    ```json
+    {
+      "order_id": "2001",
+      "payment_method": "Credit Card",
+      "shipping_address": "123 Main St, City, Country"
+    }
+    ```
+- **Response**:
+    ```json
+    {
+      "checkout_id": "3001",
+      "order_id": "2001",
+      "status": "Checkout initiated",
+      "total_price": 350,
+      "payment_status": "Pending"
+    }
+    ```
+
+#### `POST /api/checkout/confirm`
+- **Description**: Confirm the payment and complete the checkout.
+- **Request Body**:
+    ```json
+    {
+      "checkout_id": "3001",
+      "payment_status": "Completed"
+    }
+    ```
+- **Response**:
+    ```json
+    {
+      "message": "Payment successful, order confirmed",
+      "checkout_id": "3001",
+      "payment_status": "Completed"
+    }
+    ```
+
+---
+
 ## **Routes File Structure**
 
 The **routers/** directory contains the route files for each feature or resource. Each route file defines the HTTP methods and their corresponding actions.
@@ -216,23 +324,11 @@ This file contains routes for user authentication, including registration and lo
 ### **3. Product Routes** (`routers/productRoutes.js`)
 This file contains routes for product management. It includes routes to fetch, create, update, and delete products.
 
-## **Request and Response Format**
+### **4. Order Routes** (`routers/orderRoutes.js`)
+This file contains routes for order management. It includes routes to create, fetch, update, and delete orders.
 
-Each API request and response follows a consistent JSON format. The **request body** should contain the necessary fields, and the **response body** will return the corresponding data, including status codes such as 200 (OK), 201 (Created), 400 (Bad Request), and 500 (Server Error).
-
----
-
-## **Setup Instructions**
-
-Please follow the setup instructions provided in the initial documentation to install dependencies and configure the environment variables.
-
----
-
-### **Swagger API Documentation**
-
-Swagger has been integrated into the project for generating and serving API documentation. You can view the interactive API documentation at the following endpoint:
-
-- **Swagger UI**: `http://localhost:3000/api-docs`
+### **5. Checkout Routes** (`routers/checkoutRoutes.js`)
+This file contains routes for the checkout process. It includes routes to initiate and confirm payment for orders.
 
 ---
 
@@ -241,6 +337,14 @@ Swagger has been integrated into the project for generating and serving API docu
 - **Start the development server**: `npm start`
 - **Install dependencies**: `npm install`
 - **Generate Swagger documentation**: This is automatically generated when the server starts.
+
+## **Swagger API Documentation**
+
+Swagger has been integrated into the project for generating and serving API documentation. You can view the interactive API documentation at the following endpoint:
+
+- **Swagger UI**: `http://localhost:3000/api-docs`
+
+---
 
 ## **Future Enhancements**
 
