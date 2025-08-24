@@ -22,7 +22,7 @@ For example:
 The API uses **JWT** for authentication. You will need to obtain a JWT token by logging in with valid credentials. The token should be included in the **Authorization** header for all protected routes.
 
 - **Login to get JWT token**:
-  - **POST** `/api/v1/users/login`
+  - **POST** `/api/v1/auth/login`
   - **Request Body**:
     ```json
     {
@@ -290,7 +290,23 @@ Fetch all orders.
 
 - Response:
 ```json
-[ { "_id": "60c72b1f9d1b8d0c08c1e1a7", "orderItems": ["orderItem1"], "totalPrice": 200, "status": "pending", "user": "userID" } ]
+[
+  {
+    "_id": "60c72b1f9d1b8d0c08c1e1a7",
+    "orderItems": ["orderItem1", "orderItem2"],
+    "shippingAddress1": "Address 1",
+    "shippingAddress2": "Address 2",
+    "city": "City",
+    "zip": "12345",
+    "country": "Country",
+    "phone": "1234567890",
+    "status": "pending",
+    "totalPrice": 200,
+    "user": "userID",
+    "dateOrdered": "2021-07-16T08:50:00.000Z",
+    "updatedAt": "2021-07-16T08:50:00.000Z"
+  }
+]
 ```
 
 #### GET /api/v1/orders/:id
@@ -298,7 +314,21 @@ Fetch a single order by ID.
 
 - Response:
 ```json
-{ "_id": "60c72b1f9d1b8d0c08c1e1a7", "orderItems": ["orderItem1"], "totalPrice": 200, "status": "pending", "user": "userID" }
+{
+  "_id": "60c72b1f9d1b8d0c08c1e1a7",
+  "orderItems": ["orderItem1", "orderItem2"],
+  "shippingAddress1": "Address 1",
+  "shippingAddress2": "Address 2",
+  "city": "City",
+  "zip": "12345",
+  "country": "Country",
+  "phone": "1234567890",
+  "status": "pending",
+  "totalPrice": 200,
+  "user": "userID",
+  "dateOrdered": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T08:50:00.000Z"
+}
 ```
 
 #### POST /api/v1/orders
@@ -307,9 +337,15 @@ Create a new order.
 - Request Body:
 ```json
 {
-  "orderItems": ["orderItem1"],
-  "totalPrice": 200,
+  "orderItems": ["orderItem1", "orderItem2"],
+  "shippingAddress1": "Address 1",
+  "shippingAddress2": "Address 2",
+  "city": "City",
+  "zip": "12345",
+  "country": "Country",
+  "phone": "1234567890",
   "status": "pending",
+  "totalPrice": 200,
   "user": "userID"
 }
 ```
@@ -318,10 +354,18 @@ Create a new order.
 ```json
 {
   "_id": "60c72b1f9d1b8d0c08c1e1a7",
-  "orderItems": ["orderItem1"],
-  "totalPrice": 200,
+  "orderItems": ["orderItem1", "orderItem2"],
+  "shippingAddress1": "Address 1",
+  "shippingAddress2": "Address 2",
+  "city": "City",
+  "zip": "12345",
+  "country": "Country",
+  "phone": "1234567890",
   "status": "pending",
-  "user": "userID"
+  "totalPrice": 200,
+  "user": "userID",
+  "dateOrdered": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T08:50:00.000Z"
 }
 ```
 
@@ -354,7 +398,7 @@ Delete an order by ID.
 }
 ```
 
-### 4. User Routes
+### 4. Users Routes
 
 #### GET /api/v1/users
 Fetch all users.
@@ -363,10 +407,11 @@ Fetch all users.
 ```json
 [
   {
-    "_id": "60c72b1f9d1b8d0c08c1e1b7",
-    "name": "User Name",
+    "_id": "60c72b1f9d1b8d0c08c1e1a5",
     "email": "user@example.com",
-    "role": "admin",
+    "name": "User Name",
+    "role": "user",
+    "status": "active",
     "createdAt": "2021-07-16T08:50:00.000Z",
     "updatedAt": "2021-07-16T08:50:00.000Z"
   }
@@ -379,10 +424,11 @@ Fetch a single user by ID.
 - Response:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1b7",
-  "name": "User Name",
+  "_id": "60c72b1f9d1b8d0c08c1e1a5",
   "email": "user@example.com",
-  "role": "admin",
+  "name": "User Name",
+  "role": "user",
+  "status": "active",
   "createdAt": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
@@ -394,42 +440,50 @@ Create a new user.
 - Request Body:
 ```json
 {
-  "name": "New User",
   "email": "newuser@example.com",
   "password": "password123",
-  "role": "user"
+  "name": "New User",
+  "role": "user",
+  "status": "active"
 }
 ```
 
 - Response:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1b7",
-  "name": "New User",
+  "_id": "60c72b1f9d1b8d0c08c1e1a5",
   "email": "newuser@example.com",
-  "role": "user"
+  "name": "New User",
+  "role": "user",
+  "status": "active",
+  "createdAt": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T08:50:00.000Z"
 }
 ```
 
 #### PUT /api/v1/users/:id
-Update an existing user's information.
+Update an existing user's details.
 
 - Request Body:
 ```json
 {
-  "name": "Updated User",
   "email": "updateduser@example.com",
-  "role": "user"
+  "name": "Updated User",
+  "role": "admin",
+  "status": "active"
 }
 ```
 
 - Response:
 ```json
 {
-  "_id": "60c72b1f9d1b8d0c08c1e1b7",
-  "name": "Updated User",
+  "_id": "60c72b1f9d1b8d0c08c1e1a5",
   "email": "updateduser@example.com",
-  "role": "user"
+  "name": "Updated User",
+  "role": "admin",
+  "status": "active",
+  "createdAt": "2021-07-16T08:50:00.000Z",
+  "updatedAt": "2021-07-16T09:00:00.000Z"
 }
 ```
 
@@ -443,18 +497,7 @@ Delete a user by ID.
 }
 ```
 
-### Error Handling
-If an API request fails, the server will return an error response with a status code and message.
-
-Example:
-```json
-{
-  "message": "Error fetching categories"
-}
-```
-
----
-
 ### Conclusion
 This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
 
+---
