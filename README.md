@@ -60,6 +60,9 @@ Fetch all categories.
   {
     "_id": "60c72b1f9d1b8d0c08c1e1b6",
     "name": "Category Name",
+    "color": "#FF5733",
+    "icon": "icon-name",
+    "image": "category-image-url",
     "createdAt": "2021-07-16T08:50:00.000Z",
     "updatedAt": "2021-07-16T08:50:00.000Z"
   }
@@ -74,6 +77,9 @@ Fetch a single category by ID.
 {
   "_id": "60c72b1f9d1b8d0c08c1e1b6",
   "name": "Category Name",
+  "color": "#FF5733",
+  "icon": "icon-name",
+  "image": "category-image-url",
   "createdAt": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
@@ -85,7 +91,10 @@ Create a new category.
 - **Request Body**:
 ```json
 {
-  "name": "Category Name"
+  "name": "Category Name",
+  "color": "#FF5733",
+  "icon": "icon-name",
+  "image": "category-image-url"
 }
 ```
 
@@ -94,6 +103,9 @@ Create a new category.
 {
   "_id": "60c72b1f9d1b8d0c08c1e1b6",
   "name": "Category Name",
+  "color": "#FF5733",
+  "icon": "icon-name",
+  "image": "category-image-url",
   "createdAt": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
@@ -105,7 +117,10 @@ Update an existing category by ID.
 - **Request Body**:
 ```json
 {
-  "name": "Updated Category Name"
+  "name": "Updated Category Name",
+  "color": "#FF5733",
+  "icon": "updated-icon-name",
+  "image": "updated-category-image-url"
 }
 ```
 
@@ -114,6 +129,9 @@ Update an existing category by ID.
 {
   "_id": "60c72b1f9d1b8d0c08c1e1b6",
   "name": "Updated Category Name",
+  "color": "#FF5733",
+  "icon": "updated-icon-name",
+  "image": "updated-category-image-url",
   "createdAt": "2021-07-16T08:50:00.000Z",
   "updatedAt": "2021-07-16T09:00:00.000Z"
 }
