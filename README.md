@@ -194,7 +194,7 @@ Fetch a single product by ID.
   "updatedAt": "2021-07-16T08:50:00.000Z"
 }
 ```
-
+*** Please upload image as a file system. Post the data as form data insteal of req.body.***
 #### **POST /api/v1/products**
 Create a new product.
 
@@ -438,10 +438,21 @@ Delete a user by ID.
 }
 ```
 
+#### **GET /api/v1/users/get/count**
+Returns the total number of users.
+
+- **Response**:
+```json
+{
+  "total": 10
+}
+```
+
 ---
 
 ### Conclusion
 This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
 
 In the documentation you're completely missing user routes. Please add them and make a professional readme.md file as downloadable.
+
 
