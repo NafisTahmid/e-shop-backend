@@ -453,6 +453,7 @@ Returns the total number of users.
 ### Conclusion
 This API allows managing categories, products, users, and orders for an e-commerce platform. By using JWT authentication and structured routes, the API provides secure and organized access to backend resources.
 
-In the documentation you're completely missing user routes. Please add them and make a professional readme.md file as downloadable.
+
+
 
 
